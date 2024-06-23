@@ -1,0 +1,52 @@
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding-top: 24px;
+  background: url('bg.png') repeat-y;
+  background-size: 100% auto;
+  height: 100%;
+}
+
+#header {
+  margin-bottom: 24px;
+  color: #FFF;
+  text-align: center;
+  font-size: 42px;
+  font-family: Trebuchet MS, Arial, sans-serif;
+
+  span {
+    margin-right: 24px;
+  }
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+
+  img {
+    object-fit: contain;
+    width: 12.5%;
+    height: fit-content;
+    max-width: 200px;
+    transition: transform 0.8s 0.85s;
+
+    &:hover {
+      cursor: pointer;
+      filter: brightness(70%);
+    }
+
+    &.hit {
+      filter: saturate(200%) hue-rotate(70deg);
+    }
+  
+    &.miss {
+      filter: saturate(200%) hue-rotate(310deg);
+    }
+  }
+
+  &.loading img {
+    pointer-events: none;
+    transform: rotateY(180deg);
+  }
+}
