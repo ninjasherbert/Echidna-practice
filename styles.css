@@ -24,6 +24,18 @@ body {
   display: flex;
   justify-content: center;
 
+  button {
+    color: #FFF;
+    width: 120px;
+    font-size: 42px;
+    background-color: #FF0000;
+    border-radius: 2px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    padding: 8px 16px;
+  }
+
   img {
     object-fit: contain;
     width: 12.5%;

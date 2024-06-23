@@ -1,50 +1,37 @@
 const container = document.getElementById('container');
+const timer = document.getElementById('timer');
 const successCounter = document.getElementById('hits');
 const failCounter = document.getElementById('misses');
 let hits = 0;
 let misses = 0;
-let movingInterval = null;
-let timer = null;
 
 function load() {
-  setTimeout(() => {
-    container.classList.remove('loading');
-    container.innerHTML = '';
+  container.classList.remove('loading');
+  container.innerHTML = '';
 
-    const correctIndex = Math.floor(Math.random() * 8);
-    const direction = Math.floor(Math.random() * 2);
-  
-    for (let i = 0; i < 8; i++) {
-      const directions = ['left', 'right'];
-      const img = document.createElement('img');
-      img.src = `mirror-${directions.at(i === correctIndex ? direction : direction - 1)}.png`;
-      img.onclick = () => {
-        click(i === correctIndex, i);
-      };
-      img.classList.add(i === correctIndex ? 'correct' : 'incorrect')
-      container.append(img);
-    }
+  const correctIndex = Math.floor(Math.random() * 8);
+  const direction = Math.floor(Math.random() * 2);
 
-    let paddingTop = 0;
-    movingInterval = setInterval(() => {
-      paddingTop++;
-      container.style.paddingTop = paddingTop + 'px';
-    }, 10);
-
-    timer = setTimeout(() => {
-      click(false);
-    }, 5000);
-  }, 400);
+  for (let i = 0; i < 8; i++) {
+    const directions = ['left', 'right'];
+    const img = document.createElement('img');
+    img.src = `mirror-${directions.at(i === correctIndex ? direction : direction - 1)}.png`;
+    img.onclick = () => {
+      click(i === correctIndex, i);
+    };
+    img.classList.add(i === correctIndex ? 'correct' : 'incorrect')
+    container.append(img);
+  }
 }
 
 function click(hit, index) {
   container.classList.add('loading');
-  clearTimeout(timer);
-  clearInterval(movingInterval);
   container.children[index]?.classList.add(hit ? 'hit' : 'miss');
   setTimeout(() => {
     container.children[index]?.classList.remove('hit', 'miss');
-    load();
+    setTimeout(() => {
+      load();
+    }, 350);
   }, 800);
 
   hits += hit ? 1 : 0;
@@ -53,4 +40,12 @@ function click(hit, index) {
   failCounter.innerText = "Fail: " + misses;
 }
 
-load();
+function start() {
+  container.innerHTML = '';
+  const start = Date.now();
+  setInterval(() => {
+    const elapsedTime = Date.now() - start;
+    timer.innerHTML = (elapsedTime / 1000).toFixed(2)
+  }, 1);
+  load();
+}
